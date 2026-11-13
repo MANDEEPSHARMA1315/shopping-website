@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "8f88c8f0-1234-4567-89ab-cdef01234567",
+		"name": "Online Fashion Shopping API Collection",
+		"description": "Complete REST API collection for Authentication, Products, Categories, Cart, and Orders",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Alice Fashion\",\n  \"email\": \"alice@fashion.com\",\n  \"password\": \"alice123\",\n  \"phone\": \"9876543210\",\n  \"address\": \"10 West End Avenue, Mumbai\",\n  \"role\": \"user\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/register",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@fashion.com\",\n  \"password\": \"user123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/login",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Get User Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/auth/profile",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "auth", "profile"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:5000/api/categories",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "categories"]
+						}
+					}
+				},
+				{
+					"name": "Create Category (Admin Only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{adminToken}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Watches\",\n  \"description\": \"Luxury timepieces and smartwatches\",\n  \"image\": \"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800\",\n  \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/categories",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "categories"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:5000/api/products",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "products"]
+						}
+					}
+				},
+				{
+					"name": "Filter Products (Category, Brand, Min & Max Price)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:5000/api/products?category=Shoes&brand=Nike&minPrice=1000&maxPrice=10000",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "products"],
+							"query": [
+								{ "key": "category", "value": "Shoes" },
+								{ "key": "brand", "value": "Nike" },
+								{ "key": "minPrice", "value": "1000" },
+								{ "key": "maxPrice", "value": "10000" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Product (Admin Only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{adminToken}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Puma Nitro Running Shoes\",\n  \"description\": \"Lightweight responsive cushion distance running shoes.\",\n  \"brand\": \"Puma\",\n  \"category\": \"CATEGORY_ID_HERE\",\n  \"gender\": \"Men\",\n  \"price\": 5999,\n  \"discount\": 15,\n  \"sizes\": [\"8\", \"9\", \"10\"],\n  \"availableColors\": [\"Black\", \"Lime Green\"],\n  \"image\": \"https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800\",\n  \"stock\": 20,\n  \"rating\": 4.7\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/products",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "products"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Get Cart",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/cart",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "cart"]
+						}
+					}
+				},
+				{
+					"name": "Add Product to Cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productId\": \"PRODUCT_ID_HERE\",\n  \"quantity\": 2,\n  \"size\": \"M\",\n  \"color\": \"Black\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/cart",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "cart"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create Order from Cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"shippingAddress\": {\n    \"fullName\": \"John Doe\",\n    \"phone\": \"9876543210\",\n    \"address\": \"42 Regent Street\",\n    \"city\": \"Bengaluru\",\n    \"state\": \"Karnataka\",\n    \"pincode\": \"560038\"\n  },\n  \"paymentMethod\": \"Cash on Delivery\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/orders",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "orders"]
+						}
+					}
+				},
+				{
+					"name": "Get User Orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/orders",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "orders"]
+						}
+					}
+				}
+			]
+		}
+	]
+}
